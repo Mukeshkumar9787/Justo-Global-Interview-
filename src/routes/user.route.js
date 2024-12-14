@@ -106,7 +106,10 @@ userRouter.get("/verifyOneTimeLink/:link", async (req, res) => {
         .status(410)
         .json({ status: 404, message: "Link Already Used" });
     }
-
+await connection.execute(`
+      UPDATE OneTimeLink SET isVerified = 1 WHERE (link='${link}');
+      `
+    );
     res.json({
       statusCode: 0,
       token: generationToken({ username: linkData.username }),
