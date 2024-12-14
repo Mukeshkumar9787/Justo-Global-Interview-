@@ -101,13 +101,13 @@ userRouter.get("/verifyOneTimeLink/:link", async (req, res) => {
       return res.status(410).json({ status: 410, message: "Link Expired" });
     }
 
-    if (linkData.isVerified == 1) {
+    if (linkData.isVerfied == 1) {
       return res
         .status(410)
         .json({ status: 404, message: "Link Already Used" });
     }
 await connection.execute(`
-      UPDATE OneTimeLink SET isVerified = 1 WHERE (link='${link}');
+      UPDATE OneTimeLink SET isVerfied = 1 WHERE (link='${link}');
       `
     );
     res.json({
